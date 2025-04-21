@@ -1,4 +1,4 @@
-using StripeDemoPOC.Models;
+using IyzicoDemoPOC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -723,11 +723,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Emir\\Documents\\GitHub\\StripeDemoPOC\\StripeDemoPOC\\StripeDemoPOC.csproj",
+      "projectUniqueName": "C:\\Users\\Emir\\Documents\\GitHub\\StripeDemoPOC\\IyzicoDemoPOC\\StripeDemoPOC.csproj",
       "projectName": "StripeDemoPOC",
-      "projectPath": "C:\\Users\\Emir\\Documents\\GitHub\\StripeDemoPOC\\StripeDemoPOC\\StripeDemoPOC.csproj",
+      "projectPath": "C:\\Users\\Emir\\Documents\\GitHub\\StripeDemoPOC\\IyzicoDemoPOC\\StripeDemoPOC.csproj",
       "packagesPath": "C:\\Users\\Emir\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Emir\\Documents\\GitHub\\StripeDemoPOC\\StripeDemoPOC\\obj\\",
+      "outputPath": "C:\\Users\\Emir\\Documents\\GitHub\\StripeDemoPOC\\IyzicoDemoPOC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
