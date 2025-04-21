@@ -2,12 +2,19 @@ using StripeDemoPOC.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// PayPal config
-builder.Services.Configure<PayPalSettings>(builder.Configuration.GetSection("PayPal"));
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.Configure<IyzicoSettings>(builder.Configuration.GetSection("Iyzico"));
 builder.Services.AddHttpClient();
 
-builder.Services.AddControllers();
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

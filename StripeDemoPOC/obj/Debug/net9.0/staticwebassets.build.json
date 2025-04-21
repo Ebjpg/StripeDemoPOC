@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "QSknLBL3d16l8yLpco40RCp3jtxrEABNa1zHCn9W9oA=",
+  "Source": "StripeDemoPOC",
+  "BasePath": "_content/StripeDemoPOC",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
