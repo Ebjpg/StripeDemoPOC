@@ -84,7 +84,6 @@ namespace StripeDemoPOC.Controllers
 
             var message = new HttpRequestMessage(HttpMethod.Post, uri);
             message.Headers.Add("Accept", "application/json");
-            message.Headers.Add("Content-Type", "application/json");
             message.Headers.Add("Authorization", $"IYZWS {_settings.ApiKey}:{hash}");
 
             message.Content = new StringContent(json, Encoding.UTF8, "application/json");

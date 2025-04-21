@@ -36,3 +36,6 @@ C:\Users\Emir\Documents\GitHub\StripeDemoPOC\StripeDemoPOC\obj\Debug\net9.0\refi
 C:\Users\Emir\Documents\GitHub\StripeDemoPOC\StripeDemoPOC\obj\Debug\net9.0\StripeDemoPOC.pdb
 C:\Users\Emir\Documents\GitHub\StripeDemoPOC\StripeDemoPOC\obj\Debug\net9.0\StripeDemoPOC.genruntimeconfig.cache
 C:\Users\Emir\Documents\GitHub\StripeDemoPOC\StripeDemoPOC\obj\Debug\net9.0\ref\StripeDemoPOC.dll
+C:\Users\Emir\Documents\GitHub\StripeDemoPOC\StripeDemoPOC\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Emir\Documents\GitHub\StripeDemoPOC\StripeDemoPOC\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Emir\Documents\GitHub\StripeDemoPOC\StripeDemoPOC\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll

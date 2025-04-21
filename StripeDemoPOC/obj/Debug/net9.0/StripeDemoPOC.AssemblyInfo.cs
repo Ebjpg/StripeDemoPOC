@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StripeDemoPOC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+270aeb8eb8203d90a09ae32f033a5d8e70f726a4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+96076c763de254c0bd6604fbd4c161143fdd4bc0")]
 [assembly: System.Reflection.AssemblyProductAttribute("StripeDemoPOC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StripeDemoPOC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
