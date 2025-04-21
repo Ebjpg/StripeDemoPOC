@@ -1,4 +1,4 @@
-namespace StripeDemoPOC.Models
+namespace IyzicoDemoPOC.Models
 {
     public class IyzicoSettings
     {

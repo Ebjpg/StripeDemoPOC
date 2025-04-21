@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using StripeDemoPOC.Models;
+using IyzicoDemoPOC.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
-namespace StripeDemoPOC.Controllers
+namespace IyzicoDemoPOC.Controllers
 {
     [ApiController]
     [Route("iyzico")]
