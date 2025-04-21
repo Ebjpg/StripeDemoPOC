@@ -1,77 +1,105 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using StripeDemoPOC.Models;
-using System.Net.Http.Headers;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
 namespace StripeDemoPOC.Controllers
 {
     [ApiController]
-    [Route("paypal")]
-    public class PayPalController : ControllerBase
+    [Route("iyzico")]
+    public class IyzicoController : ControllerBase
     {
-        private readonly PayPalSettings _settings;
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IyzicoSettings _settings;
+        private readonly IHttpClientFactory _factory;
 
-        public PayPalController(IOptions<PayPalSettings> settings, IHttpClientFactory httpClientFactory)
+        public IyzicoController(IOptions<IyzicoSettings> settings, IHttpClientFactory factory)
         {
             _settings = settings.Value;
-            _httpClientFactory = httpClientFactory;
+            _factory = factory;
         }
 
-        [HttpPost("create-order")]
-        public async Task<IActionResult> CreateOrder()
+        [HttpPost("create-checkout-form")]
+        public async Task<IActionResult> CreateCheckoutForm()
         {
-            var client = _httpClientFactory.CreateClient();
-            var auth = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_settings.ClientId}:{_settings.ClientSecret}"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", auth);
+            var httpClient = _factory.CreateClient();
+            var uri = $"{_settings.BaseUrl}/payment/iyzipos/checkout/form/initialize";
 
-            // 1. Access Token Al
-            var tokenResponse = await client.PostAsync($"{_settings.BaseUrl}/v1/oauth2/token",
-                new StringContent("grant_type=client_credentials", Encoding.UTF8, "application/x-www-form-urlencoded"));
-
-            var tokenResult = JsonSerializer.Deserialize<JsonElement>(await tokenResponse.Content.ReadAsStringAsync());
-            var accessToken = tokenResult.GetProperty("access_token").GetString();
-
-            // 2. Yeni Order Oluştur
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-            var body = new
+            var request = new
             {
-                intent = "CAPTURE",
-                purchase_units = new[]
+                locale = "tr",
+                conversationId = "123456789",
+                price = "100.00",
+                paidPrice = "100.00",
+                currency = "TRY",
+                basketId = "B67832",
+                paymentGroup = "PRODUCT",
+                callbackUrl = _settings.CallbackUrl,
+                buyer = new
+                {
+                    id = "BY789",
+                    name = "Emirhan",
+                    surname = "Dagdelen",
+                    gsmNumber = "+905350000000",
+                    email = "emir@example.com",
+                    identityNumber = "11111111111",
+                    registrationAddress = "Istanbul Kadikoy",
+                    city = "Istanbul",
+                    country = "Turkey",
+                    zipCode = "34710"
+                },
+                shippingAddress = new
+                {
+                    contactName = "Emirhan Dagdelen",
+                    city = "Istanbul",
+                    country = "Turkey",
+                    address = "Test mahallesi No:1",
+                    zipCode = "34710"
+                },
+                billingAddress = new
+                {
+                    contactName = "Emirhan Dagdelen",
+                    city = "Istanbul",
+                    country = "Turkey",
+                    address = "Fatura mahallesi No:2",
+                    zipCode = "34710"
+                },
+                basketItems = new[]
                 {
                     new {
-                        amount = new {
-                            currency_code = "USD",
-                            value = "10.00"
-                        }
+                        id = "BI101",
+                        name = "USB Kablo",
+                        category1 = "Elektronik",
+                        itemType = "PHYSICAL",
+                        price = "100.00"
                     }
-                },
-                application_context = new {
-                    return_url = _settings.SuccessUrl,
-                    cancel_url = _settings.CancelUrl
                 }
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync($"{_settings.BaseUrl}/v2/checkout/orders", content);
-            var json = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+            var json = JsonSerializer.Serialize(request);
+            var base64Data = Convert.ToBase64String(Encoding.UTF8.GetBytes(json));
+            var hashStr = _settings.ApiKey + json + _settings.SecretKey;
+            var hash = Convert.ToBase64String(SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(hashStr)));
 
-            var approveLink = json.RootElement
-                .GetProperty("links")
-                .EnumerateArray()
-                .First(x => x.GetProperty("rel").GetString() == "approve")
-                .GetProperty("href").GetString();
+            var message = new HttpRequestMessage(HttpMethod.Post, uri);
+            message.Headers.Add("Accept", "application/json");
+            message.Headers.Add("Content-Type", "application/json");
+            message.Headers.Add("Authorization", $"IYZWS {_settings.ApiKey}:{hash}");
 
-            return Ok(new { redirect_url = approveLink });
+            message.Content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await httpClient.SendAsync(message);
+            var responseContent = await response.Content.ReadAsStringAsync();
+
+            return Content(responseContent, "application/json");
         }
 
-        [HttpGet("success")]
-        public IActionResult Success() => Ok("✅ Payment successful!");
-
-        [HttpGet("cancel")]
-        public IActionResult Cancel() => Ok("❌ Payment cancelled.");
+        [HttpPost("callback")]
+        public IActionResult Callback()
+        {
+            // iyzico success/failed yönlendirme sonrası döner
+            return Ok("✅ Callback received.");
+        }
     }
 }
