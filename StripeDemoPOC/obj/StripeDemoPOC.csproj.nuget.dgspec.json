@@ -53,6 +53,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[9.0.4, )"
+            },
+            "Stripe.net": {
+              "target": "Package",
+              "version": "[48.0.2, )"
             }
           },
           "imports": [
